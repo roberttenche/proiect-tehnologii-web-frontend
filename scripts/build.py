@@ -68,6 +68,7 @@ def arg_help():
 def build():
     info('Starting build...\n')
     system_run(["npx parcel build src/index.html"], shell=True)
+    success('Build sucessfully finished!')
 
 def test():
     info('Tests not implemented!\n')
