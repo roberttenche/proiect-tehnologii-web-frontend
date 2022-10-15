@@ -2,9 +2,10 @@
   "name": "proiect-tehnologii-web-frontend",
   "version": "1.0.0",
   "description": "Proiect realizat de Țenche Robert și Razvan Rugescu, Universitatea de Vest Timișoara, Informatică Aplicată, Anul III",
-  "main": "index.js",
+  "main": "src/app.ts",
   "scripts": {
-    "test": "echo [TEST] This is a test && exit 0"
+    "test": "python scripts/build.py --test",
+    "build": "python scripts/build.py --test"
   },
   "repository": {
     "type": "git",
