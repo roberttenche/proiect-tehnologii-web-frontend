@@ -10,6 +10,7 @@ on:
 jobs:
 
   build:
+    name: Build-Test-Deploy
     runs-on: self-hosted
 
     strategy:
@@ -19,8 +20,6 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
-    - name: Build-Test-Deploy
-      uses: actions/setup-node@v3
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
