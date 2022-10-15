@@ -80,7 +80,6 @@ def deploy():
 
     if not path.exists("dist/"): error("Build project first!")
 
-    system_run(["rm dist/*.map"], shell=True)
     system_run(["cp -a dist/* /var/www/html"], shell=True)
 
     success("Sucessfuly deployed!")
