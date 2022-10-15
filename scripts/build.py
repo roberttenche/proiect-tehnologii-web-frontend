@@ -1,4 +1,4 @@
-from os import path
+from os import path, getcwd
 from subprocess import run as system_run
 
 from sys import argv, platform as system_type, exit
@@ -64,7 +64,7 @@ def arg_help():
 
 def build():
     info('Starting build...\n')
-    system_run(["npx parcel build src/index.html"], shell=True)
+    system_run(["npx", "parcel", "build", "src/index.html"], shell=True)
     success('Build sucessfully finished!')
 
 def test():
@@ -82,7 +82,9 @@ def deploy():
     success("Sucessfuly deployed!")
 
 def run_local():
-    system_run(["npx parcel -p 4200 src/index.html"], shell=True)
+    system_run(["npm","i"], shell=True)
+    print(getcwd())
+    system_run(["npx", "parcel", "-p", "4200", "src/index.html"], shell=True)
 
 def main():
     hello('Have a nice day!\n')
