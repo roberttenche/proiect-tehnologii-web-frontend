@@ -1,4 +1,5 @@
 import subprocess
+import os
 
 from sys import argv, exit
 from colorama import Fore, Back, Style
@@ -40,10 +41,11 @@ def parse_args():
 def arg_help():
     hello('Welcome to the help page')
     print('''Available arguments:
-    --help   -h == Brings up this page
-    --build  -b == Starts the build
-    --test   -t == Runs tests
-    --deploy -d == Starts deployment to server\n''')
+    --help   -h    == Brings up this page
+    --build  -b    == Starts the build
+    --test   -t    == Runs tests
+    --deploy -d    == Starts deployment to server
+    --run_local -r == Starts local development server (WINDOWS ONLY)\n''')
     exit(0)
 
 def build():
@@ -77,13 +79,14 @@ def deploy():
 
     subprocess.run(["sleep", "5"])
 
-    subprocess.call([
+    subprocess.Popen([
+        "nohup",
         "screen",
         "-S", "frontend", # session name
         "-t", "Frontend", # screen 
         "-d", "-m",       # run in detached mode
         "npx", "parcel", "build", "-p", "5000", "src/index.html"
-    ])
+    ], preexec_fn=os.setpgrp)
     success("Sucessfully deployed to server!")
 
 def run_local():
