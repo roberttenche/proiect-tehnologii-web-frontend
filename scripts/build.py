@@ -1,6 +1,5 @@
 import subprocess
 
-from subprocess import run as system_run
 from sys import argv, exit
 from colorama import Fore, Back, Style
 
@@ -46,7 +45,7 @@ def kill_last_deploy():
 def deploy():
     info('Starting deployment...')
     kill_last_deploy()
-    warning('Deploy not implemented')
+    subprocess.call(["npx","parcel","-p","4200","src/index.html"])
 
 def main():
     hello('Have a nice day!')
@@ -54,8 +53,8 @@ def main():
     parse_args()
 
     if arg_struct['build'] == True: build()
-    if arg_struct['test'] == True: test()
-    if arg_struct['deploy'] == True: deploy()
-
+    elif arg_struct['test'] == True: test()
+    elif arg_struct['deploy'] == True: deploy()
+    else: error("No arguments provided. Use --help for more information.")
 if __name__ == '__main__':
     main()
