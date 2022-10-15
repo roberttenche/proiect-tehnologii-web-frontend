@@ -58,7 +58,7 @@ def kill_last_deploy():
             "screen", "-list"
         ]))
     except:
-        info("No previous deployment found")
+        info("No previous deployment found\n")
         return
 
     pid = out.replace("\\t","") \
@@ -67,11 +67,14 @@ def kill_last_deploy():
 
     subprocess.run(["screen", "kill", pid])
 
-    info("Killed last deployment process PID: " + pid)
+    info("Killed last deployment process\n")
 
 def deploy():
-    info('Starting deployment...')
+    info('Starting deployment...\n')
     kill_last_deploy()
+
+    subprocess.run(["sleep", "5"])
+
     subprocess.call([
         "screen",
         "-S", "frontend", # session name
@@ -79,6 +82,7 @@ def deploy():
         "-d", "-m",       # run in detached mode
         "npx", "parcel", "-p", "4200", "src/index.html"
     ])
+    success("Sucessfully deployed to server!")
 
 def main():
     hello('Have a nice day!\n')
