@@ -1,7 +1,7 @@
-import subprocess
-import os
+from os import path
+from subprocess import run as system_run
 
-from sys import argv, exit
+from sys import argv, platform as system_type, exit
 from colorama import Fore, Back, Style
 
 
@@ -28,12 +28,20 @@ arg_struct = {
 def parse_args():
     info('Parsing arguments...\n')
     for arg in args[1:]:
-        if arg == '--help' or (arg.count('-') == 1 and 'h' in arg): arg_struct['help'] = True; continue
-        if arg == '--build' or (arg.count('-') == 1 and 'b' in arg): arg_struct['build'] = True; continue
-        if arg == '--test' or (arg.count('-') == 1 and 't' in arg): arg_struct['test'] = True; continue
-        if arg == '--deploy' or (arg.count('-') == 1 and 'd' in arg): arg_struct['deploy'] = True; continue
-        if arg == '--run_local' or (arg.count('-') == 1 and 'r' in arg): arg_struct['run_local'] = True; continue
-        error('Unrecognized arg: ' + arg)
+        if arg.count('-') == 1:
+            if 'h' in arg: arg_struct['help'] = True
+            if 'b' in arg: arg_struct['build'] = True
+            if 't' in arg: arg_struct['test'] = True
+            if 'd' in arg: arg_struct['deploy'] = True
+            if 'r' in arg: arg_struct['run_local'] = True
+        elif arg.count('-') == 2:
+            if arg == '--help': continue
+            if arg == '--build': continue
+            if arg == '--test': continue
+            if arg == '--deploy': continue
+            if arg == '--run_local': continue
+        else:
+            error('Unrecognized arg: ' + arg)
 
 ###
 ### BUILD SCRIPT FUNCTIONS
@@ -42,66 +50,47 @@ def arg_help():
     hello('Welcome to the help page')
     print('''Available arguments:
     --help   -h    == Brings up this page
-    --build  -b    == Starts the build
+    --build  -b    == Starts the build (Linux only)
     --test   -t    == Runs tests
-    --deploy -d    == Starts deployment to server
-    --run_local -r == Starts local development server (WINDOWS ONLY)\n''')
+    --deploy -d    == Starts deployment to server (Linux only)
+    --run_local -r == Starts local development server\n''')
     exit(0)
 
 def build():
-    info('Nothing to build currently\n')
+    info('Starting build...\n')
+    system_run(["npx parcel build src/index.html"], shell=True)
 
 def test():
     info('Tests not implemented!\n')
 
-def kill_last_deploy():
-    info('Killing last deployment process\n')
-
-    try:
-        out = str(subprocess.check_output([
-            "screen", "-list"
-        ]))
-    except:
-        info("No previous deployment found\n")
-        return
-
-    pid = out.replace("\\t","") \
-        .split("\\n")[1] \
-        .split(".")[0]
-
-    subprocess.run(["screen", "kill", pid])
-
-    info("Killed last deployment process\n")
-
 def deploy():
     info('Starting deployment...\n')
-    kill_last_deploy()
 
-    subprocess.run(["sleep", "5"])
+    if not (system_type == "linux" or system_type == "linux2"): error("Deploy is an Linux only feature")
 
-    subprocess.Popen([
-        "nohup",
-        "screen",
-        "-S", "frontend", # session name
-        "-t", "Frontend", # screen 
-        "-d", "-m",       # run in detached mode
-        "npx", "parcel", "build", "-p", "5000", "src/index.html"
-    ], preexec_fn=os.setpgrp)
-    success("Sucessfully deployed to server!")
+    if not path.exists("dist/"): error("Build project first!")
+
+    system_run(["rm dist/*.map"], shell=True)
+    system_run(["cp -a dist/* /var/www/html"], shell=True)
+
+    success("Sucessfuly deployed!")
 
 def run_local():
-    subprocess.run(["npx", "parcel", "src/index.html"], shell=True)
+    system_run(["npx parcel -p 4200 src/index.html"], shell=True)
 
 def main():
     hello('Have a nice day!\n')
 
     parse_args()
 
-    if arg_struct['help'] == True: arg_help()
-    if arg_struct['build'] == True: build()
-    elif arg_struct['test'] == True: test()
-    elif arg_struct['deploy'] == True: deploy()
-    elif arg_struct['run_local'] == True: run_local()
-    else: error("No arguments provided. Use --help for more information.")
+    if args_len == 1: error("No arguments provided. Use --help for more information.")
+
+    if arg_struct['help']      == True: arg_help()
+
+    if arg_struct['build']     == True: build()
+    if arg_struct['test']      == True: test()
+    if arg_struct['deploy']    == True: deploy()
+    if arg_struct['run_local'] == True: run_local()
+
 if __name__ == '__main__':
     main()
