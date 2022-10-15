@@ -38,10 +38,13 @@ def parse_args():
             if arg == '--help': arg_struct['help'] = True; continue
             if arg == '--build': arg_struct['build'] = True; continue
             if arg == '--test': arg_struct['test'] = True; continue
-            if arg == '--deploy': arg: arg_struct['deploy'] = True; continue
-            if arg == '--run_local': arg: arg_struct['run_local'] = True; continue
+            if arg == '--deploy': arg_struct['deploy'] = True; continue
+            if arg == '--run_local': arg_struct['run_local'] = True; continue
         else:
             error('Unrecognized arg: ' + arg)
+
+    print(args)
+    print(arg_struct)
 
     true_cout = 0
     for arg in arg_struct:
