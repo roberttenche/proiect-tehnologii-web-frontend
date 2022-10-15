@@ -4,8 +4,9 @@
   "description": "Proiect realizat de Țenche Robert și Razvan Rugescu, Universitatea de Vest Timișoara, Informatică Aplicată, Anul III",
   "default": "src/app.ts",
   "scripts": {
+    "build": "python scripts/build.py --build",
     "test": "python scripts/build.py --test",
-    "build": "python scripts/build.py --build"
+    "deploy": "python scripts/build.py --deploy &"
   },
   "repository": {
     "type": "git",
