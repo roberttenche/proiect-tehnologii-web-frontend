@@ -21,6 +21,7 @@ arg_struct = {
     'build': False,                # -b --build
     'test': False,                 # -t --test
     'deploy': False,               # -d --deploy
+    'run_local': False,            # -r --run_local # FOR LOCAL USE ONLY
 }
 
 def parse_args():
@@ -30,6 +31,7 @@ def parse_args():
         if arg == '--build' or (arg.count('-') == 1 and 'b' in arg): arg_struct['build'] = True; continue
         if arg == '--test' or (arg.count('-') == 1 and 't' in arg): arg_struct['test'] = True; continue
         if arg == '--deploy' or (arg.count('-') == 1 and 'd' in arg): arg_struct['deploy'] = True; continue
+        if arg == '--run_local' or (arg.count('-') == 1 and 'r' in arg): arg_struct['run_local'] = True; continue
         error('Unrecognized arg: ' + arg)
 
 ###
@@ -80,9 +82,12 @@ def deploy():
         "-S", "frontend", # session name
         "-t", "Frontend", # screen 
         "-d", "-m",       # run in detached mode
-        "npx", "parcel", "-p", "4200", "src/index.html"
+        "npx", "parcel", "build", "-p", "5000", "src/index.html"
     ])
     success("Sucessfully deployed to server!")
+
+def run_local():
+    subprocess.run(["npx", "parcel", "src/index.html"], shell=True)
 
 def main():
     hello('Have a nice day!\n')
@@ -93,6 +98,7 @@ def main():
     if arg_struct['build'] == True: build()
     elif arg_struct['test'] == True: test()
     elif arg_struct['deploy'] == True: deploy()
+    elif arg_struct['run_local'] == True: run_local()
     else: error("No arguments provided. Use --help for more information.")
 if __name__ == '__main__':
     main()
