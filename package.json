@@ -5,7 +5,7 @@
   "main": "src/app.ts",
   "scripts": {
     "test": "python scripts/build.py --test",
-    "build": "python scripts/build.py --test"
+    "build": "python scripts/build.py --build"
   },
   "repository": {
     "type": "git",
