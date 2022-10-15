@@ -1,16 +1,16 @@
 # This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
 # For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
 
-name: BTD
+name: CI
 
 on:
   push:
-    branches: [ "master" ]
+    branches: [ master ]
 
 jobs:
 
-  setup:
-    name: Setup
+  build:
+    name: Build-Test-Deploy
     runs-on: self-hosted
 
     strategy:
@@ -22,23 +22,9 @@ jobs:
     - uses: actions/checkout@v3
       uses: actions/setup-node@v3
       with:
+        node-version: ${{ matrix.node-version }}
         cache: 'npm'
     - run: npm ci
-
-  build:
-    name: Build
-    runs-on: self-hosted
-    steps:
-    - run: npm run build
-
-  test:
-    name: Test
-    runs-on: self-hosted
-    steps:
+    - run: npm run build --if-present
     - run: npm run test
-
-  deploy:
-    name: Deploy
-    runs-on: self-hosted
-    steps:
     - run: npm run deploy
