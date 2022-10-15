@@ -2,7 +2,7 @@
   "name": "proiect-tehnologii-web-frontend",
   "version": "1.0.0",
   "description": "Proiect realizat de Țenche Robert și Razvan Rugescu, Universitatea de Vest Timișoara, Informatică Aplicată, Anul III",
-  "main": "src/app.ts",
+  "default": "src/app.ts",
   "scripts": {
     "test": "python scripts/build.py --test",
     "build": "python scripts/build.py --build"
