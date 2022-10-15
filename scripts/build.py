@@ -1,5 +1,5 @@
-from os import path, getcwd
-from subprocess import run as system_run
+from os import path, getcwd, system as system_run
+
 
 from sys import argv, platform as system_type, exit
 from colorama import Fore, Back, Style
@@ -64,8 +64,8 @@ def arg_help():
 
 def build():
     info('Starting build...\n')
-    system_run(["npx", "parcel", "build", "src/index.html"], shell=True)
-    success('Build sucessfully finished!')
+    system_run("npx parcel build src/index.html")
+    success('Build sucessfully finished!\n')
 
 def test():
     info('Tests not implemented!\n')
@@ -77,14 +77,13 @@ def deploy():
 
     if not path.exists("dist/"): error("Build project first!")
 
-    system_run(["cp -a dist/* /var/www/html"], shell=True)
+    system_run("cp -a dist/* /var/www/html")
 
-    success("Sucessfuly deployed!")
+    success("Sucessfuly deployed!\n")
 
 def run_local():
-    system_run(["npm","i"], shell=True)
-    print(getcwd())
-    system_run(["npx", "parcel", "-p", "4200", "src/index.html"], shell=True)
+    system_run("npm i")
+    system_run("npx parcel -p 4200 src/index.html")
 
 def main():
     hello('Have a nice day!\n')
