@@ -35,13 +35,19 @@ def parse_args():
             if 'd' in arg: arg_struct['deploy'] = True
             if 'r' in arg: arg_struct['run_local'] = True
         elif arg.count('-') == 2:
-            if arg == '--help': continue
-            if arg == '--build': continue
-            if arg == '--test': continue
-            if arg == '--deploy': continue
-            if arg == '--run_local': continue
+            if arg == '--help': arg_struct['help'] = True; continue
+            if arg == '--build': arg_struct['build'] = True; continue
+            if arg == '--test': arg_struct['test'] = True; continue
+            if arg == '--deploy': arg: arg_struct['deploy'] = True; continue
+            if arg == '--run_local': arg: arg_struct['run_local'] = True; continue
         else:
             error('Unrecognized arg: ' + arg)
+
+    true_cout = 0
+    for arg in arg_struct:
+        if arg_struct[arg]: true_cout+=1; break
+    if true_cout == 0:
+        error("Something went wrong with argument parsing.")
 
 ###
 ### BUILD SCRIPT FUNCTIONS
