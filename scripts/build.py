@@ -48,7 +48,7 @@ def build():
     info('Nothing to build currently\n')
 
 def test():
-    warning('Tests not implemented!\n')
+    info('Tests not implemented!\n')
 
 def kill_last_deploy():
     info('Killing last deployment process\n')
