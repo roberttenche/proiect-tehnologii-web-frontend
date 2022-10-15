@@ -6,7 +6,7 @@
   "scripts": {
     "build": "python scripts/build.py --build",
     "test": "python scripts/build.py --test",
-    "deploy": "python scripts/build.py --deploy &"
+    "deploy": "python scripts/build.py --deploy"
   },
   "repository": {
     "type": "git",
