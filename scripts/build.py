@@ -43,9 +43,6 @@ def parse_args():
         else:
             error('Unrecognized arg: ' + arg)
 
-    print(args)
-    print(arg_struct)
-
     true_cout = 0
     for arg in arg_struct:
         if arg_struct[arg]: true_cout+=1; break
