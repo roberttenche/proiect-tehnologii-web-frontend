@@ -77,14 +77,17 @@ def deploy():
 
     if not path.exists("dist/"): error("Build project first!")
 
-    system_run("cp -a dist/* /var/www/html")
+    system_run("cp -a dist/proiect-tehnologii-web-frontend/* /var/www/html")
 
     success("Sucessfuly deployed!\n")
 
 def run_local():
-    system_run("npm i")
-    system_run("npx parcel -p 4200 src/index.html")
+    system_run("ng serve --open")
 
+
+###
+### MAIN ENTRY POINT
+###
 def main():
     hello('Have a nice day!\n')
 
