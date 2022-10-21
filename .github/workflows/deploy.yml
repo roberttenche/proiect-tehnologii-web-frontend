@@ -10,13 +10,13 @@ on:
 jobs: 
 
   build:
-    name: CI/CD
+    name: Deploy
     runs-on: self-hosted
 
     steps:
     - uses: dcodeIO/setup-node-nvm@master
       with:
-        node-version: node
+        node-version: 18
     - run: npm ci 
     - run: npm run build
     - run: npm run test
