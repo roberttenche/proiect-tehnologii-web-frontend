@@ -7,19 +7,16 @@ on:
   push:
     branches: [ master ]
 
-jobs:
+jobs: 
 
   build:
     name: Build-Test-Deploy
     runs-on: self-hosted
 
-    strategy:
-      matrix:
-        node-version: [18.x]
-        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
-
     steps:
-    - uses: actions/checkout@v3
+    - uses: dcodeIO/setup-node-nvm@master
+      with:
+        node-version: node
     - run: npm ci 
     - run: npm run build
     - run: npm run test
