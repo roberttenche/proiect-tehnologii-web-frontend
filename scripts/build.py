@@ -22,6 +22,7 @@ arg_struct = {
     'build': False,                # -b --build
     'test': False,                 # -t --test
     'deploy': False,               # -d --deploy
+    'cleanup': False,              # -c --cleanup
     'run_local': False,            # -r --run_local # FOR LOCAL USE ONLY
 }
 
@@ -33,12 +34,14 @@ def parse_args():
             if 'b' in arg: arg_struct['build'] = True
             if 't' in arg: arg_struct['test'] = True
             if 'd' in arg: arg_struct['deploy'] = True
+            if 'c' in arg: arg_struct['cleanup'] = True
             if 'r' in arg: arg_struct['run_local'] = True
         elif arg.count('-') == 2:
             if arg == '--help': arg_struct['help'] = True; continue
             if arg == '--build': arg_struct['build'] = True; continue
             if arg == '--test': arg_struct['test'] = True; continue
             if arg == '--deploy': arg_struct['deploy'] = True; continue
+            if arg == '--cleanup': arg_struct['cleanup'] = True; continue
             if arg == '--run_local': arg_struct['run_local'] = True; continue
         else:
             error('Unrecognized arg: ' + arg)
@@ -55,11 +58,13 @@ def parse_args():
 def arg_help():
     hello('Welcome to the help page')
     print('''Available arguments:
-    --help   -h    == Brings up this page
-    --build  -b    == Starts the build (Linux only)
-    --test   -t    == Runs tests
-    --deploy -d    == Starts deployment to server (Linux only)
-    --run_local -r == Starts local development server\n''')
+    --help      -h    == Brings up this page
+    --build     -b    == Starts the build
+    --test      -t    == Runs tests
+    --deploy    -d    == Starts deployment to server  (Linux only)
+    --cleanup   -c    == Clean build generated f iles (Linux only)
+    --run_local -r == Starts local development server
+    \n''')
     exit(0)
 
 def build():
@@ -84,6 +89,10 @@ def deploy():
 def run_local():
     system_run("ng serve --open")
 
+def cleanup():
+    if not (system_type == "linux" or system_type == "linux2"): error("Cleanup is an Linux only feature")
+    system_run("sudo rm -r ~/mynvm")
+
 
 ###
 ### MAIN ENTRY POINT
@@ -95,12 +104,13 @@ def main():
 
     if args_len == 1: error("No arguments provided. Use --help for more information.")
 
-    if arg_struct['help']      == True: arg_help()
+    if arg_struct['help']       == True: arg_help()
 
-    if arg_struct['build']     == True: build()
-    if arg_struct['test']      == True: test()
-    if arg_struct['deploy']    == True: deploy()
-    if arg_struct['run_local'] == True: run_local()
+    if arg_struct['build']      == True: build()
+    if arg_struct['test']       == True: test()
+    if arg_struct['deploy']     == True: deploy()
+    if arg_struct['cleanup']    == True: cleanup()
+    if arg_struct['run_local']  == True: run_local()
 
 if __name__ == '__main__':
     main()
