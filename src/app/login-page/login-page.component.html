@@ -1,0 +1,19 @@
+<div class="login-form">
+
+  <div class="username" style="padding-top: 20px;">
+    <input placeholder="Username" pInputText [(ngModel)]="username"/>
+  </div>
+
+  <div class="email">
+    <input placeholder="Email" pInputText [(ngModel)]="email"/>
+  </div>
+
+  <div class="password">
+    <p-password placeholder="Password" [toggleMask]="true" [(ngModel)]="password"></p-password>
+  </div>
+
+  <div class="submit">
+    <button pButton pRipple type="button" label="Login" class="p-button-rounded p-button-secondary" (click)="login()"></button>
+  </div>
+
+</div>
