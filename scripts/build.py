@@ -82,6 +82,8 @@ def deploy():
 
     if not path.exists("dist/"): error("Build project first!")
 
+    system_run("sudo rm /var/www/html/*")
+
     system_run("cp -a dist/proiect-tehnologii-web-frontend/* /var/www/html")
 
     success("Sucessfuly deployed!\n")
