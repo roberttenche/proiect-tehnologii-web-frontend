@@ -10,6 +10,7 @@ import { MenubarModule } from 'primeng/menubar';
 import { InputTextModule } from 'primeng/inputtext';
 import { PasswordModule } from 'primeng/password';
 import { ButtonModule } from 'primeng/button';
+import { DialogModule } from 'primeng/dialog';
 
 /* Project Components */
 import { AppRoutingModule } from './app-routing.module';
@@ -39,7 +40,8 @@ import { SignUpPageComponent } from './sign-up-page/sign-up-page.component';
     PasswordModule,
     ButtonModule,
     FormsModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    DialogModule
   ],
   providers: [],
   bootstrap: [AppComponent]

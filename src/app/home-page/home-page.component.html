@@ -1,1 +1,33 @@
-<h1>Home</h1>
+<div class="movie-container">
+
+  <div class="movie-id-1">
+    <img src="assets/godfather.jpg" (click)="display_dialog(1)" [style]="{width: '25vw'}"/>
+    <p-dialog header="Godfather" [(visible)]="dialogArray[1]" [style]="{height: '35vw', width: '30vw'}">
+      <p>Godfather Description</p>
+      <ng-template pTemplate="footer">
+        <p-button icon="pi pi-check" (click)="dialogArray[1]=false" label="Ok" styleClass="p-button-text"></p-button>
+      </ng-template>
+    </p-dialog>
+  </div>
+
+  <div class="movie-id-2">
+    <img src="assets/fullmetaljacket.jpg" (click)="display_dialog(2)" [style]="{width: '25vw'}"/>
+    <p-dialog header="Full Metal Jacket" [(visible)]="dialogArray[2]" [style]="{height: '35vw', width: '30vw'}">
+      <p>Full Metal Jacket description</p>
+      <ng-template pTemplate="footer">
+        <p-button icon="pi pi-check" (click)="dialogArray[2]=false" label="Ok" styleClass="p-button-text"></p-button>
+      </ng-template>
+    </p-dialog>
+  </div>
+
+  <div class="movie-id-3">
+    <img src="assets/interstellar.jpg" (click)="display_dialog(3)" [style]="{width: '25vw'}"/>
+    <p-dialog header="Interstellar" [(visible)]="dialogArray[3]" [style]="{height: '35vw', width: '30vw'}">
+      <p>Interstellar description</p>
+      <ng-template pTemplate="footer">
+        <p-button icon="pi pi-check" (click)="dialogArray[3]=false" label="Ok" styleClass="p-button-text"></p-button>
+      </ng-template>
+    </p-dialog>
+  </div>
+  
+</div>

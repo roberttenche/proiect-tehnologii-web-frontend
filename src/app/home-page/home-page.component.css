@@ -1,0 +1,10 @@
+.movie-container {
+  padding: 25px;
+  max-width: 50vw;
+  display: flex;
+  float: left;
+}
+
+div[class^='movie-id-'], div[class*=' movie-id-']{
+  padding: 10px;
+}

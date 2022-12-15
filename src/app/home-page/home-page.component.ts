@@ -7,9 +7,21 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomePageComponent implements OnInit {
 
-  constructor() { }
+  dialogArray : Array<boolean>;
+
+  constructor() {
+    this.dialogArray = [ false, false ];
+  }
 
   ngOnInit(): void {
+  }
+
+  display_dialog(movie_id : number): void {
+    this.dialogArray[movie_id] = true;
+  }
+
+  close_all_dialogs(): void {
+    this.dialogArray.forEach( (elem) => elem = false);
   }
 
 }
