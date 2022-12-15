@@ -1,11 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-
-export interface User {
-  id: number,
-  name: string,
-  email: string,
-  password: string
-};
+import { User } from '../sign-up-page/sign-up-page.component';
 
 @Component({
   selector: 'app-login-page',
@@ -14,14 +8,12 @@ export interface User {
 })
 export class LoginPageComponent implements OnInit {
 
-  public username: string;
+  username: string;
   password: string;
-  email: string;
 
   constructor() {
     this.username = '';
     this.password = '';
-    this.email = '';
   }
 
   ngOnInit(): void {
@@ -37,7 +29,6 @@ export class LoginPageComponent implements OnInit {
 
     user.id = 0;
     user.name = this.username;
-    user.email = this.email;
     user.password = this.password;
 
     console.log(user)
@@ -46,16 +37,15 @@ export class LoginPageComponent implements OnInit {
 
   validate_input(): boolean {
     const regex_usr  : RegExp = /^[a-zA-Z0-9]+$/i;
-    const regex_email: RegExp = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
 
     if (
-      (this.username == null || this.email == null || this.password == null) ||
-      (this.username == '' || this.email == '' || this.password == '')
+      (this.username == null || this.password == null) ||
+      (this.username == '' || this.password == '')
     )
       return false;
 
-    // if input username or email has special characters
-    if (!(regex_usr.test(this.username) && regex_email.test(this.email)))
+    // if input username has unauthorized special characters
+    if (!(regex_usr.test(this.username)))
       return false;
 
     return true;
