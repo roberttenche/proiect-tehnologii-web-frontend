@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 
 export interface User {
   id: number,
@@ -18,7 +19,9 @@ export class SignUpPageComponent implements OnInit {
   email: string;
   password: string;
 
-  constructor() {
+  readonly sign_up_url = "http://localhost:8080/api/user/signUp"
+
+  constructor(private http: HttpClient) {
     this.username = '';
     this.email = '';
     this.password = '';
@@ -40,8 +43,9 @@ export class SignUpPageComponent implements OnInit {
     user.email = this.email;
     user.password = this.password;
 
-    console.log(user)
-
+    this.http.post(this.sign_up_url, user).subscribe(res => {
+      alert("User " + this.username + " is created. Please log in!");
+    });
   }
 
   validate_input(): boolean {

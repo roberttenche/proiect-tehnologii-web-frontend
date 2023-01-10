@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { User } from '../sign-up-page/sign-up-page.component';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-login-page',
@@ -11,7 +12,9 @@ export class LoginPageComponent implements OnInit {
   username: string;
   password: string;
 
-  constructor() {
+  readonly login_url = "http://localhost:8080/api/user/login"
+
+  constructor(private http: HttpClient) {
     this.username = '';
     this.password = '';
   }
@@ -27,11 +30,12 @@ export class LoginPageComponent implements OnInit {
       throw new Error('User input is invalid')
     }
 
-    user.id = 0;
     user.name = this.username;
     user.password = this.password;
 
-    console.log(user)
+    this.http.post(this.login_url, user).subscribe((res : any) => {
+      localStorage.setItem('token', res.token)
+    });
 
   }
 
